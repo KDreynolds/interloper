@@ -1,0 +1,41 @@
+name: iOS Gdal build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        brew install cmake
+        git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
+
+    - name: Copy toolchain file
+      run: |
+        mkdir -p $HOME/dev/3rdParty/ios-cmake-master
+        cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
+
+    - name: Set environment variables
+      run: |
+        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
+        echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
+        echo "PREFIX=$HOME/build/iphoneos_arm64" >> $GITHUB_ENV
+        echo "OS=OS64" >> $GITHUB_ENV
+
+    - name: Copy and run build scripts
+      run: |
+        cp build-sqlite.sh $HOME/
+        cp build-proj.sh $HOME/
+        cp build-gdal.sh $HOME/
+        cp build-libiconv.sh $HOME/
+        chmod +x $HOME/build-*.sh
+        $HOME/build-sqlite.sh
+        $HOME/build-libiconv.sh
+        $HOME/build-proj.sh
+        $HOME/build-gdal.sh

@@ -30,8 +30,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DPROJ_ROOT=$PREFIX \
       -DSQLITE3_INCLUDE_DIR=$PREFIX/include \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
-      -DIconv_INCLUDE_DIR=$PREFIX/include \
-      -DIconv_LIBRARY=$PREFIX/lib/libiconv.a \
+      -DIconv_INCLUDE_DIR=$SDKPATH/usr \
+      -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
