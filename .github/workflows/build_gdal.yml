@@ -35,6 +35,7 @@ jobs:
         echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
         echo "PREFIX=$HOME/build/iphoneos_arm64" >> $GITHUB_ENV
         echo "OS=OS64" >> $GITHUB_ENV
+        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
 
     - name: Copy and run build scripts
       run: |
