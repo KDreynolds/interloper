@@ -33,9 +33,9 @@ jobs:
         cp build-sqlite.sh $HOME/
         cp build-proj.sh $HOME/
         cp build-gdal.sh $HOME/
-        cp build-libiconv.sh $HOME/
+        # cp build-libiconv.sh $HOME/
         chmod +x $HOME/build-*.sh
         $HOME/build-sqlite.sh
-        $HOME/build-libiconv.sh
+        # $HOME/build-libiconv.sh
         $HOME/build-proj.sh
         $HOME/build-gdal.sh

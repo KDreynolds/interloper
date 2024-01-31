@@ -7,8 +7,8 @@ set -e
 PROJ_VERSION="9.3.1" # Replace with the actual version you're using
 
 # Clone the PROJ repository
-git clone https://github.com/OSGeo/PROJ.git /opt/proj
-cd /opt/proj
+git clone https://github.com/OSGeo/PROJ.git $HOME/opt/proj
+cd $HOME/opt/proj
 git checkout $PROJ_VERSION
 
 # Create build directory

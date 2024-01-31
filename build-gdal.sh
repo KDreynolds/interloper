@@ -7,8 +7,8 @@ set -e
 GDAL_VERSION="3.6.2"
 
 # Clone the GDAL repository
-git clone https://github.com/OSGeo/gdal.git /opt/gdal
-cd /opt/gdal
+git clone https://github.com/OSGeo/gdal.git $HOME/opt/gdal
+cd $HOME/opt/gdal
 git checkout tags/v$GDAL_VERSION -b v$GDAL_VERSION
 
 # Environment variables (Ensure these are set correctly)
