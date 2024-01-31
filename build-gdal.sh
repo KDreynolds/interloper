@@ -4,7 +4,7 @@
 set -e
 
 # GDAL version
-GDAL_VERSION="3.8.2"
+GDAL_VERSION="3.8.3"
 
 # Clone the GDAL repository
 git clone https://github.com/OSGeo/gdal.git $HOME/opt/gdal
