@@ -19,7 +19,7 @@ jobs:
         brew install libpng
         brew install jpeg
         brew install qhull
-        brew install lerc
+        brew install liblerc
         brew install geos
         git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
 
