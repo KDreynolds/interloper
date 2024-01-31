@@ -45,3 +45,11 @@ jobs:
         $HOME/build-sqlite.sh
         $HOME/build-proj.sh
         $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+
+    - name: Generate FAT libraries
+      run: |
+        mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
+        for LIBNAME in libsqlite3 libproj libgdal; do
+          lipo -create -output $HOME/build/iphoneos/lib/${LIBNAME}.a $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a
+          lipo -create -output $HOME/build/iphonesimulator/lib/${LIBNAME}.a $HOME/build/iphonesimulator_arm64/lib/${LIBNAME}.a $HOME/build/iphonesimulator_x86_64/lib/${LIBNAME}.a
+        done
