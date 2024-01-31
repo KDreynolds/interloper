@@ -17,10 +17,11 @@ jobs:
         brew install libtiff
         brew install libgeotiff
         brew install libpng
-        brew install jpeg
-        brew install qhull
-        brew install liblerc
-        brew install geos
+        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        arch -x86_64 brew install jpeg
+        arch -x86_64 brew install qhull
+        arch -x86_64 brew install liblerc
+        arch -x86_64 brew install geos
         git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
 
     - name: Copy toolchain file
