@@ -33,6 +33,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
       -DCMAKE_BUILD_TYPE=Release \
+      -DWITH_JXL=OFF \
       ..
 
 # Build and install
