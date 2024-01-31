@@ -14,6 +14,13 @@ jobs:
     - name: Install dependencies
       run: |
         brew install cmake
+        brew install libtiff
+        brew install libgeotiff
+        brew install libpng
+        brew install jpeg
+        brew install qhull
+        brew install lerc
+        brew install geos
         git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
 
     - name: Copy toolchain file
