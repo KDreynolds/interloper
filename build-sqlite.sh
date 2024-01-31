@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Clone the SQLite amalgamation repository
-git clone https://github.com/azadkuh/sqlite-amalgamation.git /opt/sqlite-amalgamation
+git clone https://github.com/azadkuh/sqlite-amalgamation.git $HOME/opt/sqlite-amalgamation
 
 # Navigate to the repository
-cd /opt/sqlite-amalgamation
+cd $HOME/opt/sqlite-amalgamation
 
 # Remove any existing build directory and create a new one
 rm -rf build_$OS
