@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-13-xlarge
 
     steps:
     - uses: actions/checkout@v2
@@ -17,11 +17,10 @@ jobs:
         brew install libtiff
         brew install libgeotiff
         brew install libpng
-        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        arch -x86_64 brew install jpeg
-        arch -x86_64 brew install qhull
-        arch -x86_64 brew install liblerc
-        arch -x86_64 brew install geos
+        brew install jpeg
+        brew install qhull
+        brew install liblerc
+        brew install geos
         git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
 
     - name: Copy toolchain file
@@ -42,9 +41,7 @@ jobs:
         cp build-sqlite.sh $HOME/
         cp build-proj.sh $HOME/
         cp build-gdal.sh $HOME/
-        # cp build-libiconv.sh $HOME/
         chmod +x $HOME/build-*.sh
         $HOME/build-sqlite.sh
-        # $HOME/build-libiconv.sh
         $HOME/build-proj.sh
-        $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external 
+        $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
