@@ -28,7 +28,7 @@ jobs:
         mkdir -p $HOME/dev/3rdParty/ios-cmake-master
         cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
 
-    - name: Set environment variables
+    - name: Set environment variables for iphoneos arm64
       run: |
         echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
         echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
@@ -36,7 +36,25 @@ jobs:
         echo "OS=OS64" >> $GITHUB_ENV
         echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
 
-    - name: Copy and run build scripts
+    - name: Copy and run build scripts for iphoneos arm64
+      run: |
+        cp build-sqlite.sh $HOME/
+        cp build-proj.sh $HOME/
+        cp build-gdal.sh $HOME/
+        chmod +x $HOME/build-*.sh
+        $HOME/build-sqlite.sh
+        $HOME/build-proj.sh
+        $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+
+    - name: Set environment variables for iphonesimulator
+      run: |
+        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
+        echo "SDKPATH=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
+        echo "PREFIX=$HOME/build/iphonesimulator_arm64" >> $GITHUB_ENV
+        echo "OS=SIMULATORARM64" >> $GITHUB_ENV
+        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+  
+    - name: Copy and run build scripts for iphonesimulator
       run: |
         cp build-sqlite.sh $HOME/
         cp build-proj.sh $HOME/
