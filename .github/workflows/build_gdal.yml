@@ -87,6 +87,18 @@ jobs:
         make PREFIX=$HOME/build/zstd_ios_simulator_arm64 install
         echo "ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64" >> $GITHUB_ENV
 
+    - name: Build GEOS for iOS Simulator arm64
+      run: |
+        git clone https://github.com/libgeos/geos.git
+        cd geos
+        mkdir build_simulator && cd build_simulator
+        cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
+              -DPLATFORM=SIMULATORARM64 \
+              -DCMAKE_INSTALL_PREFIX=$HOME/build/geos_ios_simulator_arm64 \
+              ..
+        make -j$(sysctl -n hw.ncpu)
+        make install
+
 
     - name: Set environment variables for iphonesimulator
       run: |

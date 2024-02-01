@@ -43,6 +43,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
       -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \
       -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \
+      -DGEOS_INCLUDE_DIR=${GEOS_PREFIX}/include \
+      -DGEOS_LIBRARY=${GEOS_PREFIX}/lib/libgeos.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 # Build and install
