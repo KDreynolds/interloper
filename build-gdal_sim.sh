@@ -34,6 +34,10 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
+      -DOPENSSL_ROOT_DIR=${OPENSSL_PREFIX} \
+      -DOPENSSL_INCLUDE_DIR=${OPENSSL_INCLUDE_DIR} \
+      -DOPENSSL_CRYPTO_LIBRARY=${OPENSSL_LIB_DIR}/libcrypto.a \
+      -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
