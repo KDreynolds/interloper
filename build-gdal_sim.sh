@@ -16,6 +16,8 @@ git checkout tags/v$GDAL_VERSION -b v$GDAL_VERSION
 PREFIX=$HOME/build/iphonesimulator
 OS=SIMULATOR
 
+ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64
+
 
 # Create build directory
 rm -rf build_$OS
@@ -35,6 +37,12 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
+      -DOPENSSL_ROOT_DIR=${OPENSSL_PREFIX} \
+      -DOPENSSL_INCLUDE_DIR=${OPENSSL_INCLUDE_DIR} \
+      -DOPENSSL_CRYPTO_LIBRARY=${OPENSSL_LIB_DIR}/libcrypto.a \
+      -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
+      -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \
+      -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 # Build and install
