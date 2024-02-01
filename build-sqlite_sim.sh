@@ -16,7 +16,7 @@ cd build_$OS
 
 # Run cmake with the required options for simulator
 cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
-      -DPLATFORM=$OS \
+      -DPLATFORM=SIMULATORARM64 \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DBUILD_SHARED_LIBS=OFF \
