@@ -24,9 +24,9 @@ rm -rf build_$OS
 mkdir build_$OS
 cd build_$OS
 
-# Run cmake with the required options for simulator
+# Run cmake with the required options
 cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
-      -DPLATFORM=SIMULATORARM64 \
+      -DPLATFORM=$OS \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DBUILD_SHARED_LIBS=OFF \
@@ -37,16 +37,9 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
-      -DOPENSSL_ROOT_DIR=${OPENSSL_PREFIX} \
-      -DOPENSSL_INCLUDE_DIR=${OPENSSL_INCLUDE_DIR} \
-      -DOPENSSL_CRYPTO_LIBRARY=${OPENSSL_LIB_DIR}/libcrypto.a \
-      -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
-      -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \
-      -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \
-      -DGEOS_INCLUDE_DIR=${GEOS_PREFIX}/include \
-      -DGEOS_LIBRARY=${GEOS_PREFIX}/lib/libgeos.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
+
 # Build and install
 cmake --build .
 cmake --build . --target install
