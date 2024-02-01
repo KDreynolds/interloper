@@ -56,13 +56,13 @@ jobs:
   
     - name: Copy and run build scripts for iphonesimulator
       run: |
-        cp build-sqlite.sh $HOME/
-        cp build-proj.sh $HOME/
-        cp build-gdal.sh $HOME/
-        chmod +x $HOME/build-*.sh
-        $HOME/build-sqlite.sh
-        $HOME/build-proj.sh
-        $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+        cp build-sqlite_sim.sh $HOME/
+        cp build-proj_sim.sh $HOME/
+        cp build-gdal_sim.sh $HOME/
+        chmod +x $HOME/build-*_simulator.sh
+        $HOME/build-sqlite_sim.sh
+        $HOME/build-proj_sim.sh
+        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
 
     - name: Generate FAT libraries
       run: |
