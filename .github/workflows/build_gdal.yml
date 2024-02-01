@@ -53,6 +53,7 @@ jobs:
         export IOS_SIMULATOR_VERSION_MIN=13.0
         export SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
         export CC=$(xcrun --find clang)
+        export CFLAGS="-arch arm64 -isysroot $SDK -mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN"
         export PREFIX=$HOME/build/openssl_ios_simulator_arm64
         
         # Download and extract OpenSSL
@@ -61,10 +62,9 @@ jobs:
         cd openssl-1.1.1l
         
         # Configure and build OpenSSL
-        ./Configure iphoneos-cross no-asm --prefix=${PREFIX} \
+        ./Configure no-asm --prefix=${PREFIX} \
             -D__IOS_SIMULATOR__ \
             -DOPENSSL_NO_ASM \
-            -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN} \
             "darwin64-arm64-cc"
         make -j$(sysctl -n hw.ncpu)
         make install
