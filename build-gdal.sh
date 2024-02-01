@@ -21,7 +21,7 @@ cd build_$OS
 
 # Run cmake with the required options
 cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
-      -DPLATFORM=SIMULATORARM64 \
+      -DPLATFORM=$OS \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DBUILD_SHARED_LIBS=OFF \
@@ -30,16 +30,6 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DPROJ_ROOT=$PREFIX \
       -DSQLITE3_INCLUDE_DIR=$PREFIX/include \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
-      -DTIFF_INCLUDE_DIR=$PREFIX/include \
-      -DTIFF_LIBRARY=$PREFIX/lib/libtiff.a \
-      -DGEOTIFF_INCLUDE_DIR=$PREFIX/include \
-      -DGEOTIFF_LIBRARY=$PREFIX/lib/libgeotiff.a \
-      -DPNG_INCLUDE_DIR=$PREFIX/include \
-      -DPNG_LIBRARY=$PREFIX/lib/libpng.a \
-      -DJPEG_INCLUDE_DIR=$PREFIX/include \
-      -DJPEG_LIBRARY=$PREFIX/lib/libjpeg.a \
-      -DLERC_INCLUDE_DIR=$PREFIX/include \
-      -DLERC_LIBRARY=$PREFIX/lib/liblerc.a \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
       -DCMAKE_BUILD_TYPE=Release \
