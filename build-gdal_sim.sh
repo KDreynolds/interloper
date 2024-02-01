@@ -16,8 +16,6 @@ git checkout tags/v$GDAL_VERSION -b v$GDAL_VERSION
 PREFIX=$HOME/build/iphonesimulator
 OS=SIMULATOR
 
-# ZSTD paths
-ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64
 
 # Create build directory
 rm -rf build_$OS
@@ -26,7 +24,7 @@ cd build_$OS
 
 # Run cmake with the required options for simulator
 cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
-      -DPLATFORM=$OS \
+      -DPLATFORM=SIMULATORARM64 \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DBUILD_SHARED_LIBS=OFF \
