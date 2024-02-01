@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # Clone the SQLite amalgamation repository
-if [ ! -d "/Users/runner/opt/sqlite-amalgamation" ]; then
-  git clone https://github.com/sqlite/sqlite-amalgamation.git /Users/runner/opt/sqlite-amalgamation
-fi
+git clone https://github.com/azadkuh/sqlite-amalgamation.git $HOME/opt/sqlite-amalgamation
 
 # Navigate to the repository
 cd $HOME/opt/sqlite-amalgamation
