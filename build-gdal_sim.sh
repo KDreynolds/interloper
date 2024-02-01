@@ -16,6 +16,9 @@ git checkout tags/v$GDAL_VERSION -b v$GDAL_VERSION
 PREFIX=$HOME/build/iphonesimulator
 OS=SIMULATOR
 
+# ZSTD paths
+ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64
+
 # Create build directory
 rm -rf build_$OS
 mkdir build_$OS
@@ -38,6 +41,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DOPENSSL_INCLUDE_DIR=${OPENSSL_INCLUDE_DIR} \
       -DOPENSSL_CRYPTO_LIBRARY=${OPENSSL_LIB_DIR}/libcrypto.a \
       -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
+      -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \ # Add this line
+      -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \ # Add this line
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
