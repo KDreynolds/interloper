@@ -64,7 +64,7 @@ jobs:
         chmod +x $HOME/build-gdal_sim.sh
         $HOME/build-sqlite_sim.sh
         $HOME/build-proj_sim.sh
-        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+        $HOME/build-gdal_sim.sh 
 
     - name: Generate FAT libraries
       run: |
