@@ -1,0 +1,55 @@
+name: iOS Gdal Sim build
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-13-xlarge
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        brew install cmake
+        brew install libtiff
+        brew install libgeotiff
+        brew install libpng
+        brew install jpeg
+        brew install qhull
+        brew install liblerc
+        brew install geos
+        git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
+
+    - name: Copy toolchain file
+      run: |
+        mkdir -p $HOME/dev/3rdParty/ios-cmake-master
+        cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
+
+    - name: Set environment variables for iphonesimulator
+      run: |
+        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
+        echo "SDKPATH=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
+        echo "PREFIX=$HOME/build/iphonesimulator_arm64" >> $GITHUB_ENV
+        echo "OS=SIMULATORARM64" >> $GITHUB_ENV
+        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+    
+    - name: Copy and run build scripts for iphonesimulator
+      run: |
+        cp build-sqlite_sim.sh $HOME/
+        cp build-proj_sim.sh $HOME/
+        cp build-gdal_sim.sh $HOME/
+        chmod +x $HOME/build-sqlite_sim.sh
+        chmod +x $HOME/build-proj_sim.sh
+        chmod +x $HOME/build-gdal_sim.sh
+        $HOME/build-sqlite_sim.sh
+        $HOME/build-proj_sim.sh
+        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+
+
+    - name: Upload GDAL iOS Simulator build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: gdal-ios-sim-build
+        path: ${{ github.workspace }}/build/iphonesimulator_arm64/**

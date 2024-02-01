@@ -1,8 +1,7 @@
 name: iOS Gdal build
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -46,84 +45,9 @@ jobs:
         $HOME/build-proj.sh
         $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
 
-
-    - name: Build OpenSSL for iOS Simulator arm64
-      run: |
-        # Define environment variables
-        export IOS_SIMULATOR_VERSION_MIN=13.0
-        export SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
-        export CC=$(xcrun --find clang)
-        export CFLAGS="-arch arm64 -isysroot $SDK -mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN"
-        export PREFIX=$HOME/build/openssl_ios_simulator_arm64
-        
-        # Download and extract OpenSSL
-        curl -O https://www.openssl.org/source/openssl-1.1.1l.tar.gz
-        tar -xzf openssl-1.1.1l.tar.gz
-        cd openssl-1.1.1l
-        
-        # Configure and build OpenSSL
-        ./Configure no-asm --prefix=${PREFIX} \
-            -D__IOS_SIMULATOR__ \
-            -DOPENSSL_NO_ASM \
-            "darwin64-arm64-cc"
-        make -j$(sysctl -n hw.ncpu)
-        make install
-        
-        # Set environment variables for later steps to use the built OpenSSL
-        echo "OPENSSL_PREFIX=${PREFIX}" >> $GITHUB_ENV
-
-
-    - name: Build libzstd for iOS Simulator arm64
-      run: |
-        git clone https://github.com/facebook/zstd.git
-        cd zstd
-        export IOS_SIMULATOR_VERSION_MIN=13.0
-        export SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
-        export CC=$(xcrun --find clang)
-        # Build the library for iOS Simulator arm64
-        make -j$(sysctl -n hw.ncpu) \
-            CC="$CC -isysroot $SDK -arch arm64 -mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN"
-        # Install the library
-        make PREFIX=$HOME/build/zstd_ios_simulator_arm64 install
-        echo "ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64" >> $GITHUB_ENV
-
-    - name: Build GEOS for iOS Simulator arm64
-      run: |
-        git clone https://github.com/libgeos/geos.git
-        cd geos
-        mkdir build_simulator && cd build_simulator
-        cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
-              -DPLATFORM=SIMULATORARM64 \
-              -DCMAKE_INSTALL_PREFIX=$HOME/build/geos_ios_simulator_arm64 \
-              ..
-        make -j$(sysctl -n hw.ncpu)
-        make install
-
-
-    - name: Set environment variables for iphonesimulator
-      run: |
-        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
-        echo "SDKPATH=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
-        echo "PREFIX=$HOME/build/iphonesimulator_arm64" >> $GITHUB_ENV
-        echo "OS=SIMULATORARM64" >> $GITHUB_ENV
-        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
-  
-    - name: Copy and run build scripts for iphonesimulator
-      run: |
-        cp build-sqlite_sim.sh $HOME/
-        cp build-proj_sim.sh $HOME/
-        cp build-gdal_sim.sh $HOME/
-        chmod +x $HOME/build-sqlite_sim.sh
-        chmod +x $HOME/build-proj_sim.sh
-        chmod +x $HOME/build-gdal_sim.sh
-        $HOME/build-sqlite_sim.sh
-        $HOME/build-proj_sim.sh
-        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
-
-    - name: Generate FAT libraries
-      run: |
-        mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
-        for LIBNAME in libsqlite3 libproj libgdal; do
-          lipo -create -output $HOME/build/iphoneos/lib/${LIBNAME}.a $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a
-          lipo -create -output $HOME/build/iphonesimulator/lib/${LIBNAME}.a $HOME/build/iphonesimulator_arm64/lib/${LIBNAME}.a $HOME/build/iphonesimulator_x86_64/lib/${LIBNAME}.a
-        done
+    - name: Upload GDAL iOS build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: gdal-ios-build
+        path: ${{ github.workspace }}/build/iphoneos_arm64/**
+    

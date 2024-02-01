@@ -1,0 +1,22 @@
+name: Generate FAT Libraries
+
+on:
+    workflow_dispatch:
+
+jobs:
+  generate-fat-libraries:
+    runs-on: macos-13-xlarge
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup environment
+      run: |
+        mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
+
+    - name: Generate FAT libraries
+      run: |
+        for LIBNAME in libsqlite3 libproj libgdal; do
+          lipo -create -output $HOME/build/iphoneos/lib/${LIBNAME}.a $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a
+          lipo -create -output $HOME/build/iphonesimulator/lib/${LIBNAME}.a $HOME/build/iphonesimulator_arm64/lib/${LIBNAME}.a $HOME/build/iphonesimulator_x86_64/lib/${LIBNAME}.a
+        done
