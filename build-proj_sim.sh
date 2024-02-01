@@ -7,9 +7,8 @@ set -e
 PROJ_VERSION="9.3.1"
 
 # Clone the PROJ repository for simulator
-if [ ! -d "$HOME/opt/proj_simulator" ]; then
-  git clone https://github.com/OSGeo/PROJ.git $HOME/opt/proj_simulator
-fi
+git clone https://github.com/OSGeo/PROJ.git $HOME/opt/proj_simulator
+
 cd $HOME/opt/proj_simulator
 git checkout $PROJ_VERSION
 

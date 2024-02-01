@@ -59,7 +59,9 @@ jobs:
         cp build-sqlite_sim.sh $HOME/
         cp build-proj_sim.sh $HOME/
         cp build-gdal_sim.sh $HOME/
-        chmod +x $HOME/build-*_simulator.sh
+        chmod +x $HOME/build-sqlite_sim.sh
+        chmod +x $HOME/build-proj_sim.sh
+        chmod +x $HOME/build-gdal_sim.sh
         $HOME/build-sqlite_sim.sh
         $HOME/build-proj_sim.sh
         $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external

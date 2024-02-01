@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Clone the SQLite amalgamation repository for simulator
-if [ ! -d "$HOME/opt/sqlite-amalgamation_simulator" ]; then
-  git clone https://github.com/azadkuh/sqlite-amalgamation.git $HOME/opt/sqlite-amalgamation_simulator
-fi
+git clone https://github.com/azadkuh/sqlite-amalgamation.git $HOME/opt/sqlite-amalgamation_simulator
+
 cd $HOME/opt/sqlite-amalgamation_simulator
 
 # Adjust PREFIX and OS for simulator build

@@ -7,9 +7,8 @@ set -e
 GDAL_VERSION="3.5.3"
 
 # Clone the GDAL repository for simulator
-if [ ! -d "$HOME/opt/gdal_simulator" ]; then
-  git clone https://github.com/OSGeo/gdal.git $HOME/opt/gdal_simulator
-fi
+git clone https://github.com/OSGeo/gdal.git $HOME/opt/gdal_simulator
+
 cd $HOME/opt/gdal_simulator
 git checkout tags/v$GDAL_VERSION -b v$GDAL_VERSION
 
