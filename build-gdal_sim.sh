@@ -41,8 +41,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DOPENSSL_INCLUDE_DIR=${OPENSSL_INCLUDE_DIR} \
       -DOPENSSL_CRYPTO_LIBRARY=${OPENSSL_LIB_DIR}/libcrypto.a \
       -DOPENSSL_SSL_LIBRARY=${OPENSSL_LIB_DIR}/libssl.a \
-      -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \ # Add this line
-      -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \ # Add this line
+      -DZSTD_INCLUDE_DIR=${ZSTD_PREFIX}/include \
+      -DZSTD_LIBRARY=${ZSTD_PREFIX}/lib/libzstd.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
