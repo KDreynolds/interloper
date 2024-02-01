@@ -52,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: gdal-ios-sim-build
-        path: ${{ github.workspace }}/build/iphonesimulator_arm64/**
+        path: Users/runner/build/iphonesimulator_arm64/**
