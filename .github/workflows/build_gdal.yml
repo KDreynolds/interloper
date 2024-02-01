@@ -79,10 +79,10 @@ jobs:
         export IOS_SIMULATOR_VERSION_MIN=13.0
         export SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
         export CC=$(xcrun --find clang)
+        # Build the library for iOS Simulator arm64
         make -j$(sysctl -n hw.ncpu) \
-            CC="$CC -isysroot $SDK -arch arm64 -mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN" \
-            PREFIX=$HOME/build/zstd_ios_simulator_arm64 \
-            libzstd.a
+            CC="$CC -isysroot $SDK -arch arm64 -mios-simulator-version-min=$IOS_SIMULATOR_VERSION_MIN"
+        # Install the library
         make PREFIX=$HOME/build/zstd_ios_simulator_arm64 install
         echo "ZSTD_PREFIX=$HOME/build/zstd_ios_simulator_arm64" >> $GITHUB_ENV
 
