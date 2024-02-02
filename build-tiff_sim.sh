@@ -20,7 +20,11 @@ cd build
 # Configure the build with CMake
 cmake .. -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
          -DPLATFORM=SIMULATOR64 \
-         -DCMAKE_INSTALL_PREFIX=$PREFIX
+         -DCMAKE_INSTALL_PREFIX=$PREFIX \
+         -DBUILD_SHARED_LIBS=OFF \
+         -Dld-version-script=OFF \
+         -Djpeg=ON \
+         -DZIP_SUPPORT=ON
 
 # Build and install
 cmake --build . --config Release

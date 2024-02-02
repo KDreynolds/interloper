@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest # Switched to a potentially less expensive runner
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
