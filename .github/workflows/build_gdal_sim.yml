@@ -26,13 +26,7 @@ jobs:
       run: |
         mkdir -p $HOME/dev/3rdParty/ios-cmake-master
         cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
-
-    - name: Install CocoaPods
-      run: sudo gem install cocoapods
-
-    - name: Install Pods
-      run: |
-        pod install --project-directory=.
+        
 
     - name: Set environment variables for iphonesimulator
       run: |
