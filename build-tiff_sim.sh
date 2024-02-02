@@ -6,9 +6,6 @@ set -e
 # Define where to install the libraries
 PREFIX=$HOME/build/iphonesimulator_x86_64
 
-# Define the path to the iOS CMake toolchain file
-CMTOOLCHAIN=$HOME/path/to/your/ios/toolchain/file.cmake
-
 # Clone the TIFF library
 git clone https://gitlab.com/libtiff/libtiff.git $HOME/opt/libtiff
 cd $HOME/opt/libtiff
