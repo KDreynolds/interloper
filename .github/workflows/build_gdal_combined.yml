@@ -45,7 +45,7 @@ jobs:
         chmod +x $HOME/build-gdal_combined.sh
         $HOME/build-sqlite_combined.sh
         $HOME/build-proj_combined.sh
-        $HOME/build-gdal_combined.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+        $HOME/build-gdal_combined.sh 
 
     # - name: Upload GDAL iOS build artifacts
     #   uses: actions/upload-artifact@v2
