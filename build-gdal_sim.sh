@@ -37,6 +37,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DSQLITE3_LIBRARY=$PREFIX/lib/libsqlite3.a \
       -DIconv_INCLUDE_DIR=$SDKPATH/usr \
       -DIconv_LIBRARY=$SDKPATH/usr/lib/libiconv.tbd \
+      -DGEOTIFF_INCLUDE_DIR=$PREFIX/include \
+      -DGEOTIFF_LIBRARY=$PREFIX/lib/libgeotiff.a \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 

@@ -27,6 +27,24 @@ jobs:
         mkdir -p $HOME/dev/3rdParty/ios-cmake-master
         cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
 
+    - name: Clone GeoTIFF repository
+      run: |
+        git clone https://github.com/OSGeo/libgeotiff.git $HOME/opt/libgeotiff
+        cd $HOME/opt/libgeotiff
+        # Optionally, checkout a specific version
+        # git checkout tags/<tag_name>
+
+    - name: Build GeoTIFF for iOS Simulator
+      run: |
+        mkdir -p $HOME/opt/libgeotiff/build_simulator
+        cd $HOME/opt/libgeotiff/build_simulator
+        cmake .. -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
+                 -DPLATFORM=SIMULATORARM64 \
+                 -DCMAKE_INSTALL_PREFIX=$PREFIX \
+                 -DBUILD_SHARED_LIBS=OFF
+        cmake --build . --config Release
+        cmake --install . --config Release
+
     - name: Set environment variables for iphonesimulator
       run: |
         echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
@@ -45,7 +63,7 @@ jobs:
         chmod +x $HOME/build-gdal_sim.sh
         $HOME/build-sqlite_sim.sh
         $HOME/build-proj_sim.sh
-        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external -DARCH=x86_64 # Ensure build scripts use the ARCH env variable
+        $HOME/build-gdal_sim.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external -DARCH=x86_64
 
     - name: Upload GDAL iOS Simulator build artifacts
       uses: actions/upload-artifact@v2
