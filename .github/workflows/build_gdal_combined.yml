@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13-xlarge
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -27,27 +27,29 @@ jobs:
         mkdir -p $HOME/dev/3rdParty/ios-cmake-master
         cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
 
-    - name: Set environment variables for iphoneos arm64
+    - name: Set environment variables for combined
       run: |
         echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
-        echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
-        echo "PREFIX=$HOME/build/iphoneos_arm64" >> $GITHUB_ENV
-        echo "OS=OS64" >> $GITHUB_ENV
+        echo "SDKPATH=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
+        echo "PREFIX=$HOME/build/iphonesimulator" >> $GITHUB_ENV
+        echo "OS=OS64COMBINED" >> $GITHUB_ENV
         echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
 
-    - name: Copy and run build scripts for iphoneos arm64
+    - name: Copy and run build scripts for combined
       run: |
-        cp build-sqlite.sh $HOME/
-        cp build-proj.sh $HOME/
-        cp build-gdal.sh $HOME/
-        chmod +x $HOME/build-*.sh
-        $HOME/build-sqlite.sh
-        $HOME/build-proj.sh
-        $HOME/build-gdal.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
+        cp build-sqlite_combined.sh $HOME/
+        cp build-proj_combined.sh $HOME/
+        cp build-gdal_combined.sh $HOME/
+        chmod +x $HOME/build-sqlite_combined.sh
+        chmod +x $HOME/build-proj_combined.sh
+        chmod +x $HOME/build-gdal_combined.sh
+        $HOME/build-sqlite_combined.sh
+        $HOME/build-proj_combined.sh
+        $HOME/build-gdal_combined.sh --with-png=external --with-jpeg=external --with-gif=external --with-jsonc=external --with-opencad=external --with-lerc=external
 
-    - name: Upload GDAL iOS build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: gdal-ios-build
-        path: /Users/runner/build/iphoneos_arm64/**
+    # - name: Upload GDAL iOS build artifacts
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: gdal-ios-build
+    #     path: /Users/runner/build/iphoneos_arm64/**
     
