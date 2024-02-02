@@ -45,7 +45,7 @@ jobs:
         chmod +x $HOME/build-gdal_sim.sh
         $HOME/build-sqlite_sim.sh
         $HOME/build-proj_sim.sh
-        $HOME/build-gdal_sim.sh -DARCH=x86_64
+        $HOME/build-gdal_sim.sh
 
     - name: Upload GDAL iOS Simulator build artifacts
       uses: actions/upload-artifact@v2
