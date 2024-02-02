@@ -25,7 +25,8 @@ mkdir build_$OS
 cd build_$OS
 
 # Run cmake with the required options
-cmake -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
+cmake . -G Xcode \
+      -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN \
       -DPLATFORM=SIMULATOR64 \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
