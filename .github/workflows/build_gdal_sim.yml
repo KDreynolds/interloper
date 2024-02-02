@@ -34,6 +34,18 @@ jobs:
         echo "PREFIX=$HOME/build/iphonesimulator_x86_64" >> $GITHUB_ENV 
         echo "OS=SIMULATOR64" >> $GITHUB_ENV 
         echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+
+    - name: Build TIFF for iOS Simulator
+      run: |
+        cp build-tiff_sim.sh $HOME/
+        chmod +x $HOME/build-tiff_sim.sh
+        $HOME/build-tiff_sim.sh
+  
+    - name: Build GeoTIFF for iOS Simulator
+      run: |
+        cp build-gtiff_sim.sh $HOME/
+        chmod +x $HOME/build-gtiff_sim.sh
+        $HOME/build-gtiff_sim.sh
     
     - name: Copy and run build scripts for iphonesimulator
       run: |
