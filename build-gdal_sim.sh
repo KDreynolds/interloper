@@ -4,7 +4,7 @@
 set -e
 
 # GDAL version
-GDAL_VERSION="3.6.3"
+GDAL_VERSION="3.5.3"
 
 # Clone the GDAL repository for simulator
 git clone https://github.com/OSGeo/gdal.git $HOME/opt/gdal_simulator
@@ -30,6 +30,8 @@ cmake . -G Xcode \
       -DPLATFORM=SIMULATOR64 \
       -DENABLE_BITCODE=OFF \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
+      -DCMAKE_DISABLE_FIND_PACKAGE_Arrow=ON .. \
+      -DGDAL_USE_JXL=OFF \
       -DBUILD_SHARED_LIBS=OFF \
       -DBUILD_APPS=OFF \
       -DBUILD_PYTHON_BINDINGS=OFF \
