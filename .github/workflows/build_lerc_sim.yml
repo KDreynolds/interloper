@@ -1,0 +1,56 @@
+name: Build LERC for iOS Simulator
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout code
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install CMake and Ninja
+      run: |
+        brew install cmake ninja
+
+    - name: Install dependencies
+      run: |
+        brew install cmake
+        brew install libtiff
+        brew install libgeotiff
+        brew install libpng
+        brew install jpeg
+        brew install qhull
+        brew install liblerc
+        brew install geos
+        git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
+
+    
+    - name: Copy toolchain file
+      run: |
+        mkdir -p $HOME/dev/3rdParty/ios-cmake-master
+        cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
+        
+
+    - name: Set environment variables for iphonesimulator
+      run: |
+        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
+        echo "SDKPATH=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
+        echo "PREFIX=$HOME/build/iphonesimulator_x86_64" >> $GITHUB_ENV 
+        echo "OS=SIMULATOR64" >> $GITHUB_ENV 
+        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake -DPLATFORM=SIMULATOR64
+
+    - name: Build
+      run: |
+        cmake --build build --config Release
