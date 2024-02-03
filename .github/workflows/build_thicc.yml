@@ -10,51 +10,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Setup environment
       run: |
-        brew install cmake
-        brew install libtiff
-        brew install libgeotiff
-        brew install libpng
-        brew install jpeg
-        brew install qhull
-        brew install liblerc
-        brew install geos
-        git clone https://github.com/leetal/ios-cmake.git $HOME/opt/ios-cmake
+        mkdir -p $HOME/build/fat-libraries
 
-    - name: Setup environment for iphoneos arm64
-      run: |
-        mkdir -p $HOME/dev/3rdParty/ios-cmake-master
-        cp $HOME/opt/ios-cmake/ios.toolchain.cmake $HOME/dev/3rdParty/ios-cmake-master/
-        echo "CMTOOLCHAIN=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake" >> $GITHUB_ENV
-        echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
-        echo "PREFIX=$HOME/build/iphoneos_arm64" >> $GITHUB_ENV
-        echo "OS=OS64" >> $GITHUB_ENV
-        echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+    - name: Download build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: $HOME/build/
 
-    - name: Build proj and sqlite for iphoneos arm64
-      run: |
-        cp build-sqlite.sh $HOME/
-        cp build-proj.sh $HOME/
-        chmod +x $HOME/build-*.sh
-        $HOME/build-sqlite.sh
-        $HOME/build-proj.sh
-
-    # Repeat the setup and build steps for iphonesimulator, adjusting PREFIX, OS, and potentially SDKPATH
-
-    - name: Setup environment for iphonesimulator
-      run: |
-        # Adjust PREFIX, OS, and potentially SDKPATH for simulator
-        echo "PREFIX=$HOME/build/iphonesimulator" >> $GITHUB_ENV
-        echo "OS=SIMULATOR64" >> $GITHUB_ENV
-        # Update SDKPATH if necessary
-
-    - name: Build proj and sqlite for iphonesimulator
-      run: |
-        $HOME/build-sqlite.sh
-        $HOME/build-proj.sh
-
-    # Continue with the steps to generate FAT libraries and upload artifacts
     - name: Generate FAT libraries
       run: |
         for LIBNAME in libsqlite3 libproj libgdal; do
