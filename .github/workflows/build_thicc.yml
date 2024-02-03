@@ -1,7 +1,7 @@
 name: Generate FAT Libraries
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   generate-fat-libraries:
@@ -12,11 +12,24 @@ jobs:
 
     - name: Setup environment
       run: |
-        mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
+        mkdir -p $HOME/build/fat-libraries
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: $HOME/build/
 
     - name: Generate FAT libraries
       run: |
         for LIBNAME in libsqlite3 libproj libgdal; do
-          lipo -create -output $HOME/build/iphoneos/lib/${LIBNAME}.a $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a
-          lipo -create -output $HOME/build/iphonesimulator/lib/${LIBNAME}.a $HOME/build/iphonesimulator_arm64/lib/${LIBNAME}.a $HOME/build/iphonesimulator_x86_64/lib/${LIBNAME}.a
+          lipo -create \
+            $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a \
+            $HOME/build/iphonesimulator/lib/${LIBNAME}.a \
+            -output $HOME/build/fat-libraries/${LIBNAME}.a
         done
+
+    - name: Upload FAT libraries
+      uses: actions/upload-artifact@v2
+      with:
+        name: gdal-fat-libraries
+        path: $HOME/build/fat-libraries/
