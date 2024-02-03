@@ -5,7 +5,7 @@ on:
 
 jobs:
   generate-fat-libraries:
-    runs-on: macos-13-xlarge
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -14,14 +14,21 @@ jobs:
       run: |
         mkdir -p $HOME/build/fat-libraries
 
-    - name: Download build artifacts
+    - name: Download SQLite and Proj iOS Simulator build artifacts
       uses: actions/download-artifact@v2
       with:
-        path: $HOME/build/
+        name: sqlite-proj-ios-simulator-build
+        path: $HOME/build/iphonesimulator
+
+    - name: Download SQLite and Proj iOS (arm64) build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: sqlite-proj-ios-arm64-build
+        path: $HOME/build/iphoneos_arm64
 
     - name: Generate FAT libraries
       run: |
-        for LIBNAME in libsqlite3 libproj libgdal; do
+        for LIBNAME in libsqlite3 libproj; do
           lipo -create \
             $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a \
             $HOME/build/iphonesimulator/lib/${LIBNAME}.a \
@@ -31,5 +38,5 @@ jobs:
     - name: Upload FAT libraries
       uses: actions/upload-artifact@v2
       with:
-        name: gdal-fat-libraries
+        name: fat-libraries
         path: $HOME/build/fat-libraries/
