@@ -1,0 +1,74 @@
+#!/bin/sh
+CONFIG_LIBS="-L/Users/runner/build/iphonesimulator/lib -lgdal /Applications/Xcode_14.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.2.sdk/usr/lib/libiconv.tbd /Applications/Xcode_14.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.2.sdk/usr/lib/liblzma.tbd -L/Users/runner/build/iphonesimulator/lib /Applications/Xcode_14.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.2.sdk/usr/lib/libz.tbd /Applications/Xcode_14.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.2.sdk/usr/lib/libexpat.tbd /Applications/Xcode_14.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator16.2.sdk/usr/lib/libxml2.tbd -lproj -lm -ldl -lsqlite3"
+CONFIG_DEP_LIBS=""
+CONFIG_PREFIX="/Users/runner/build/iphonesimulator"
+CONFIG_CFLAGS="-I/Users/runner/build/iphonesimulator/include"
+CONFIG_DATA="/Users/runner/build/iphonesimulator/share/gdal"
+CONFIG_VERSION="3.5.3dev"
+CONFIG_GNM_ENABLED=yes
+CONFIG_FORMATS="GTIFF MEM vrt Derived HFA MEM geojson TAB Shape KML VRT"
+usage()
+
+{
+	cat <<EOF
+Usage: gdal-config [OPTIONS]
+Options:
+	[--prefix[=DIR]]
+	[--libs]
+	[--dep-libs]
+	[--cflags]
+	[--datadir]
+	[--version]
+	[--ogr-enabled]
+	[--gnm-enabled]
+	[--formats]
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+case $1 in
+  --libs)
+    echo $CONFIG_LIBS
+    ;;
+
+  --dep-libs)
+    echo $CONFIG_DEP_LIBS
+    ;;
+
+  --cflags)
+    echo $CONFIG_CFLAGS
+    ;;
+
+  --datadir)
+    echo $CONFIG_DATA
+    ;;
+
+  --prefix)
+    echo $CONFIG_PREFIX
+    ;;
+
+  --version)
+    echo $CONFIG_VERSION
+    ;;
+
+  --ogr-enabled)
+    echo yes
+    ;;
+
+  --gnm-enabled)
+    echo $CONFIG_GNM_ENABLED
+    ;;
+
+  --formats)
+    echo $CONFIG_FORMATS
+    ;;
+
+  *)
+    usage 1 1>&2
+    ;;
+
+esac

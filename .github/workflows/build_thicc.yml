@@ -12,31 +12,29 @@ jobs:
 
     - name: Setup environment
       run: |
-        mkdir -p $HOME/build/fat-libraries
-
-    - name: Download SQLite and Proj iOS Simulator build artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: sqlite-proj-ios-simulator-build
-        path: $HOME/build/iphonesimulator
-
-    - name: Download SQLite and Proj iOS (arm64) build artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: sqlite-proj-ios-arm64-build
-        path: $HOME/build/iphoneos_arm64
+        mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
 
     - name: Generate FAT libraries
       run: |
-        for LIBNAME in libsqlite3 libproj; do
+        export LIBNAMES=("libsqlite3" "libproj" "libgdal")
+        for LIBNAME in "${LIBNAMES[@]}"; do
+          # Generate FAT library for iOS
           lipo -create \
-            $HOME/build/iphoneos_arm64/lib/${LIBNAME}.a \
-            $HOME/build/iphonesimulator/lib/${LIBNAME}.a \
-            -output $HOME/build/fat-libraries/${LIBNAME}.a
+            /artifacts/${LIBNAME}-ios-build/lib/${LIBNAME}.a \
+            -output $HOME/build/iphoneos/lib/${LIBNAME}.a
+          
+          # Generate FAT library for iOS Simulator
+          # Assuming there are separate builds for arm64 and x86_64 architectures of the simulator
+          lipo -create \
+            /artifacts/${LIBNAME}-ios-sim-build/lib/${LIBNAME}_arm64.a \
+            /artifacts/${LIBNAME}-ios-sim-build/lib/${LIBNAME}_x86_64.a \
+            -output $HOME/build/iphonesimulator/lib/${LIBNAME}.a
         done
 
     - name: Upload FAT libraries
       uses: actions/upload-artifact@v2
       with:
         name: fat-libraries
-        path: $HOME/build/fat-libraries/
+        path: |
+          $HOME/build/iphoneos/lib
+          $HOME/build/iphonesimulator/lib
