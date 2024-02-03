@@ -49,7 +49,7 @@ jobs:
 
     - name: Configure CMake
       run: |
-        cmake -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=$HOME/dev/3rdParty/ios-cmake-master/ios.toolchain.cmake -DPLATFORM=SIMULATOR64
+        cmake -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=$CMTOOLCHAIN -DPLATFORM=SIMULATOR64
 
     - name: Build
       run: |
