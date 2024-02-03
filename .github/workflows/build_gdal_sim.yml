@@ -1,7 +1,8 @@
 name: iOS Gdal Sim build
 
 on:
-    workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   build:
@@ -64,4 +65,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: gdal-ios-sim-build
-        path: /Users/runner/build/iphonesimulator_x86_64/** 
+        path: /Users/runner/build/iphonesimulator/** 
