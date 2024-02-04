@@ -48,5 +48,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: fat-libraries
-        path: ${{ github.workspace }}/build/iphoneos/lib
+        path: /Users/runner/build/iphoneos/lib
         if-no-files-found: warn
