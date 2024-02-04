@@ -1,0 +1,61 @@
+name: Generate Frameworks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-frameworks:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup directories and copy headers
+      run: |
+        mkdir -p $HOME/build/include_sqlite3 $HOME/build/include_proj $HOME/build/include_gdal
+        cp $HOME/build/iphoneos_arm64/include/* $HOME/build/include_gdal/
+        mv $HOME/build/include_gdal/sqlite3* $HOME/build/include_sqlite3/
+        mv $HOME/build/include_gdal/proj* $HOME/build/include_proj/
+
+    - name: Generate Frameworks for SQLite3
+      run: |
+        export FRAMENAME=sqlite3
+        export LIBNAME=libsqlite3
+        for PLATFORM in iphoneos iphonesimulator; do
+          export FRAMEPATH="$HOME/build/${PLATFORM}/${FRAMENAME}.framework"
+          mkdir -p "${FRAMEPATH}/Versions/A/Headers"
+          ln -sfh "A" "${FRAMEPATH}/Versions/Current"
+          ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
+          ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
+          cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
+          cp -a "${HOME}/build/${PLATFORM}/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+        done
+
+    - name: Generate Frameworks for Proj
+      run: |
+        export FRAMENAME=proj
+        export LIBNAME=libproj
+        for PLATFORM in iphoneos iphonesimulator; do
+          export FRAMEPATH="$HOME/build/${PLATFORM}/${FRAMENAME}.framework"
+          mkdir -p "${FRAMEPATH}/Versions/A/Headers"
+          ln -sfh "A" "${FRAMEPATH}/Versions/Current"
+          ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
+          ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
+          cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
+          cp -a "${HOME}/build/${PLATFORM}/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+        done
+
+    - name: Generate Frameworks for GDAL
+      run: |
+        export FRAMENAME=gdal
+        export LIBNAME=libgdal
+        for PLATFORM in iphoneos iphonesimulator; do
+          export FRAMEPATH="$HOME/build/${PLATFORM}/${FRAMENAME}.framework"
+          mkdir -p "${FRAMEPATH}/Versions/A/Headers"
+          ln -sfh "A" "${FRAMEPATH}/Versions/Current"
+          ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
+          ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
+          cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
+          cp -a "${HOME}/build/${PLATFORM}/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+        done
