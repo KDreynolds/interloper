@@ -14,6 +14,12 @@ jobs:
       run: |
         mkdir -p $HOME/build/iphoneos/lib $HOME/build/iphonesimulator/lib
 
+    - name: List contents of the artifacts directory
+      run: |
+        ls -lah ./artifacts
+        ls -lah ./artifacts/gdal-ios-build/lib
+        ls -lah ./artifacts/sqlite-proj-ios-arm64-build
+
     - name: Generate FAT libraries
       run: |
         # Generate FAT library for libgdal
