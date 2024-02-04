@@ -3,7 +3,7 @@ name: Generate Frameworks
 on:
   workflow_dispatch:
 
-    
+
 jobs:
   generate-frameworks:
     runs-on: macos-latest
@@ -13,7 +13,7 @@ jobs:
     - name: Setup directories and copy headers
       run: |
         mkdir -p $HOME/build/include_sqlite3 $HOME/build/include_proj $HOME/build/include_gdal
-        cp $HOME/build/iphoneos_arm64/include/* $HOME/build/include_gdal/
+        cp ./artifacts/gdal-ios-build/include/* $HOME/build/include_gdal/
         mv $HOME/build/include_gdal/sqlite3* $HOME/build/include_sqlite3/
         mv $HOME/build/include_gdal/proj* $HOME/build/include_proj/
 
