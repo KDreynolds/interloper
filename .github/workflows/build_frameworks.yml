@@ -59,3 +59,44 @@ jobs:
           cp -a "./artifacts/gdal-${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
         done
 
+    - name: Setup XCFramework directory
+      run: mkdir "${HOME}/build/xcf"
+  
+    - name: Generate XCFramework for SQLite3
+      run: |
+        xcodebuild -create-xcframework \
+        -framework "${HOME}/build/ios-arm64/sqlite3.framework" \
+        -framework "${HOME}/build/ios-simulator/sqlite3.framework" \
+        -output "${HOME}/build/xcf/sqlite3.xcframework"
+  
+    - name: Generate XCFramework for Proj
+      run: |
+        xcodebuild -create-xcframework \
+        -framework "${HOME}/build/ios-arm64/proj.framework" \
+        -framework "${HOME}/build/ios-simulator/proj.framework" \
+        -output "${HOME}/build/xcf/proj.xcframework"
+  
+    - name: Generate XCFramework for GDAL
+      run: |
+        xcodebuild -create-xcframework \
+        -framework "${HOME}/build/ios-arm64/gdal.framework" \
+        -framework "${HOME}/build/ios-simulator/gdal.framework" \
+        -output "${HOME}/build/xcf/gdal.xcframework"
+
+    - name: Upload SQLite3 XCFramework as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: sqlite3-xcframework
+        path: ${HOME}/build/xcf/sqlite3.xcframework
+  
+    - name: Upload Proj XCFramework as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: proj-xcframework
+        path: ${HOME}/build/xcf/proj.xcframework
+  
+    - name: Upload GDAL XCFramework as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: gdal-xcframework
+        path: ${HOME}/build/xcf/gdal.xcframework
