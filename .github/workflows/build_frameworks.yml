@@ -58,3 +58,4 @@ jobs:
           cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
           cp -a "./artifacts/gdal-${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
         done
+
