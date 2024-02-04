@@ -1,10 +1,9 @@
 name: Generate Frameworks
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
+    
 jobs:
   generate-frameworks:
     runs-on: macos-latest
