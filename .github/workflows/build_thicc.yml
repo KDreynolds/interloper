@@ -30,14 +30,14 @@ jobs:
           
         # Generate FAT library for libproj
         lipo -create \
-          ./artifacts/sqlite-proj-ios-arm64-build/libproj.a \
-          ./artifacts/sqlite-proj-ios-simulator-build/libproj.a \
+          ./artifacts/sqlite-proj-ios-arm64-build/lib/libproj.a \
+          ./artifacts/sqlite-proj-ios-simulator-build/lib/libproj.a \
           -output $HOME/build/iphoneos/lib/libproj.a
           
         # Generate FAT library for libsqlite3
         lipo -create \
-          ./artifacts/sqlite-proj-ios-arm64-build/libsqlite3.a \
-          ./artifacts/sqlite-proj-ios-simulator-build/libsqlite3.a \
+          ./artifacts/sqlite-proj-ios-arm64-build/lib/libsqlite3.a \
+          ./artifacts/sqlite-proj-ios-simulator-build/lib/libsqlite3.a \
           -output $HOME/build/iphoneos/lib/libsqlite3.a
 
     - name: Upload FAT libraries
