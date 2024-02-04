@@ -40,6 +40,10 @@ jobs:
           ./artifacts/sqlite-proj-ios-simulator-build/lib/libsqlite3.a \
           -output $HOME/build/iphoneos/lib/libsqlite3.a
 
+    - name: Verify FAT libraries
+      run: |
+        ls -lah $HOME/build/iphoneos/lib
+
     - name: Upload FAT libraries
       uses: actions/upload-artifact@v2
       with:
