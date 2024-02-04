@@ -18,20 +18,20 @@ jobs:
       run: |
         # Generate FAT library for libgdal
         lipo -create \
-          ./artifacts/gdal-ios-build/lib/libgdal.a \
-          ./artifacts/gdal-ios-sim-build/lib/libgdal.a \
+          ../artifacts/gdal-ios-build/lib/libgdal.a \
+          ../artifacts/gdal-ios-sim-build/lib/libgdal.a \
           -output $HOME/build/iphoneos/lib/libgdal.a
           
         # Generate FAT library for libproj
         lipo -create \
-          ./artifacts/sqlite-proj-ios-arm64-build/libproj.a \
-          ./artifacts/sqlite-proj-ios-simulator-build/libproj.a \
+          ../artifacts/sqlite-proj-ios-arm64-build/libproj.a \
+          ../artifacts/sqlite-proj-ios-simulator-build/libproj.a \
           -output $HOME/build/iphoneos/lib/libproj.a
           
         # Generate FAT library for libsqlite3
         lipo -create \
-          ./artifacts/sqlite-proj-ios-arm64-build/libsqlite3.a \
-          ./artifacts/sqlite-proj-ios-simulator-build/libsqlite3.a \
+          ../artifacts/sqlite-proj-ios-arm64-build/libsqlite3.a \
+          ../artifacts/sqlite-proj-ios-simulator-build/libsqlite3.a \
           -output $HOME/build/iphoneos/lib/libsqlite3.a
 
     - name: Upload FAT libraries
