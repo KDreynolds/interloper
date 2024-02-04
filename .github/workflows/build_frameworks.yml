@@ -80,7 +80,7 @@ jobs:
       run: ls -l "${HOME}/build/ios/gdal.framework"
    
     - name: List GDAL Framework for ios-simulator
-      run: ls -l "${HOME}/build/ios-sim/gdal
+      run: ls -l "${HOME}/build/ios-sim/gdal"
   
     - name: Generate XCFramework for GDAL
       run: |
