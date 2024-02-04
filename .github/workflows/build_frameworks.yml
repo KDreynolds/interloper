@@ -93,16 +93,16 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: sqlite3-xcframework
-        path: Users/runner/build/xcf/sqlite3.xcframework
+        path: /Users/runner/build/xcf/sqlite3.xcframework
   
     - name: Upload Proj XCFramework as Artifact
       uses: actions/upload-artifact@v2
       with:
         name: proj-xcframework
-        path: Users/runner/build/xcf/proj.xcframework
+        path: /Users/runner/build/xcf/proj.xcframework
   
     - name: Upload GDAL XCFramework as Artifact
       uses: actions/upload-artifact@v2
       with:
         name: gdal-xcframework
-        path: Users/runner/build/xcf/gdal.xcframework
+        path: /Users/runner/build/xcf/gdal.xcframework
