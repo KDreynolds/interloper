@@ -42,7 +42,7 @@ jobs:
           ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
           ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
           cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
-          cp -a "/artifacts/${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+          cp -a "/artifacts/gdal-${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
         done
 
     - name: Generate Frameworks for GDAL
@@ -56,5 +56,5 @@ jobs:
           ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
           ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
           cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
-          cp -a "/artifacts/${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+          cp -a "/artifacts/gdal-${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
         done
