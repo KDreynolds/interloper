@@ -21,14 +21,14 @@ jobs:
       run: |
         export FRAMENAME=sqlite3
         export LIBNAME=libsqlite3
-        for PLATFORM in iphoneos iphonesimulator; do
+        for PLATFORM in ios-arm64 ios-simulator; do
           export FRAMEPATH="$HOME/build/${PLATFORM}/${FRAMENAME}.framework"
           mkdir -p "${FRAMEPATH}/Versions/A/Headers"
           ln -sfh "A" "${FRAMEPATH}/Versions/Current"
           ln -shf "Versions/Current/Headers" "${FRAMEPATH}/Headers"
           ln -sfh "Versions/Current/${FRAMENAME}" "${FRAMEPATH}/${FRAMENAME}"
           cp -a "${HOME}/build/include_${FRAMENAME}/" "${FRAMEPATH}/Versions/A/Headers"
-          cp -a "${HOME}/build/${PLATFORM}/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
+          cp -a "./artifacts/sqlite-proj-${PLATFORM}-build/lib/${LIBNAME}.a" "${FRAMEPATH}/Versions/A/${FRAMENAME}"
         done
 
     - name: Generate Frameworks for Proj
